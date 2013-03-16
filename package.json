@@ -1,0 +1,30 @@
+{
+  "name": "conflation",
+  "version": "0.0.0",
+  "description": "Helps aggregate subject-predicate-object triples into condensed \"digests\"",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/carlos8f/conflation.git"
+  },
+  "homepage": "https://github.com/carlos8f/conflation",
+  "keywords": [
+    "conflate",
+    "digest",
+    "aggregate",
+    "RDF",
+    "algorithm",
+    "activity",
+    "feed",
+    "notification"
+  ],
+  "author": "Carlos Rodriguez <carlos@s8f.org> (http://s8f.org/)",
+  "license": "MIT"
+}
