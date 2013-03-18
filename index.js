@@ -2,14 +2,11 @@ module.exports.conflate = function (list, perspective) {
   var pairs = {}
     , add = []
     , remove = []
-    , result = []
     , perspective
 
   switch (perspective) {
     case 'object': perspective = [0]; break;
-    case 'predicate': perspective = [1]; break;
-    case 'subject': perspective = [2]; break;
-    default: perspective = [0, 2];
+    case 'subject': default: perspective = [2]; break;
   }
 
   list.forEach(function (item, idx) {
@@ -51,7 +48,6 @@ module.exports.conflate = function (list, perspective) {
 
   Object.keys(pairs).forEach(function (key) {
     if (pairs[key].length === 1) {
-      uniquePush(result, pairs[key][0]);
       return;
     }
 
@@ -68,17 +64,12 @@ module.exports.conflate = function (list, perspective) {
     });
 
     if (conflated[idx].length > 1) {
-      uniquePush(result, conflated);
       uniquePush(add, conflated);
-    }
-    else {
-      uniquePush(result, pairs[key][0]);
     }
   });
 
   return {
-    result: result,
     add: add,
-    remove: remove
+    remove: remove.sort()
   };
 };
