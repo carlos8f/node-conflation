@@ -21,7 +21,8 @@ Returns: object containing `add` and `remove` keys. `add` will be an array of
 new triples aggregated from the input, with either the subject or object portion
 being an array (depending on the perspective). `remove` will be an array of
 numeric indexes of the input array, of items which are redundant in light of the
-new aggregated triples.
+new aggregated triples. Duplicate items in the input will also appear in the 
+`remove` array.
 
 ## Example
 
