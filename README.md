@@ -3,7 +3,7 @@ conflation
 
 Helps aggregate subject-predicate-object triples into condensed &quot;digests&quot;
 
-[![build status](https://secure.travis-ci.org/carlos8f/conflation.png)](http://travis-ci.org/carlos8f/conflation)
+[![build status](https://secure.travis-ci.org/carlos8f/node-conflation.png)](http://travis-ci.org/carlos8f/node-conflation)
 
 Usage
 -----
