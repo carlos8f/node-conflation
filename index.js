@@ -25,7 +25,15 @@ module.exports.conflate = function (list, perspective) {
       index[key]._origIdx = idx;
     }
     if (Array.isArray(item[wildcardIdx])) {
-      index[key] = index[key].concat(item[wildcardIdx]);
+      var allIncluded = true;
+      item[wildcardIdx].forEach(function (value) {
+        if (~index[key].indexOf(value)) return;
+        index[key].push(value);
+        allIncluded = false;
+      });
+      if (allIncluded && index[key].length === 1) {
+        index[key]._active = false;
+      }
     }
     else {
       if (!~index[key].indexOf(item[wildcardIdx])) {

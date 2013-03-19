@@ -64,6 +64,25 @@ describe('re-aggregate', function () {
     activity.unshift(['jill', 'commented on', 'led zeppelin']);
     activity.unshift(['bob', 'blogged about', 'the doors']);
     var result = conflate(activity);
-    console.log(JSON.stringify(result, null, 2));
+    assertPrettyMuchEqual(result.add, [
+      [
+        'jill',
+        'commented on',
+        [
+          'led zeppelin',
+          'the doors',
+          'the beatles'
+        ]
+      ],
+      [
+        'bob',
+        'commented on',
+        [
+          'the doors',
+          'led zeppelin'
+        ]
+      ]
+    ]);
+    assertPrettyMuchEqual(result.remove, [ 1, 2, 3, 4 ]);
   });
 });
