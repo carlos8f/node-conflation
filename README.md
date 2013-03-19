@@ -12,7 +12,7 @@ Call `conflation.conflate(triples [, perspective ])`.
 
 - `triples` should be an array of triples (3-element arrays). A triple is in the
   form of `[ subject, predicate, object ]`. Subjects and objects should be strings
-  or numbers.
+  or numbers, or arrays of the same.
 - `perspective` should equal either "subject" (default) or "object". In subject
   mode, the object part of the triples will be aggregated. In object mode, the
   subject part of the triples will be aggregated.
@@ -55,8 +55,8 @@ console.log(JSON.stringify(result, null, 2));
     ]
   ],
   "remove": [
-    0,
     1,
+    2,
     5
   ]
 }
@@ -79,13 +79,18 @@ console.log(JSON.stringify(result, null, 2));
     ]
   ],
   "remove": [
-    0,
+    2,
     3,
     5
   ]
 }
 */
 ```
+
+## Re-aggregation
+
+It's possible to run aggregated triples (from `add` result) through `conflate()`
+again to re-aggregate with more data.
 
 - - -
 
