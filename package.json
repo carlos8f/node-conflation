@@ -1,6 +1,6 @@
 {
   "name": "conflation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Helps aggregate subject-predicate-object triples into condensed \"digests\"",
   "main": "index.js",
   "dependencies": {},
