@@ -59,6 +59,9 @@ module.exports.conflate = function (list, perspective) {
 
   return {
     add: add,
-    remove: remove.sort()
+    remove: remove.sort(function (a, b) {
+      if (a === b) return 0;
+      return a > b ? 1 : -1;
+    })
   };
 };
