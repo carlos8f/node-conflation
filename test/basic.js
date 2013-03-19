@@ -12,7 +12,7 @@ describe('basic test', function () {
 
   it('subject perspective', function () {
     var result = conflation.conflate(activity);
-    assert.deepEqual(result.add, [
+    assertPrettyMuchEqual(result.add, [
       [
         'jill',
         'commented on',
@@ -22,12 +22,12 @@ describe('basic test', function () {
         ]
       ]
     ]);
-    assert.deepEqual(result.remove, [ 0, 1, 5 ]);
+    assertPrettyMuchEqual(result.remove, [ 1, 2, 5 ]);
   });
 
   it('object perspective', function () {
     var result = conflation.conflate(activity, 'object');
-    assert.deepEqual(result.add, [
+    assertPrettyMuchEqual(result.add, [
       [
         [
           'jane',
@@ -37,6 +37,6 @@ describe('basic test', function () {
         'the beatles'
       ]
     ]);
-    assert.deepEqual(result.remove, [ 0, 3, 5 ]);
+    assertPrettyMuchEqual(result.remove, [ 2, 3, 5 ]);
   });
 });

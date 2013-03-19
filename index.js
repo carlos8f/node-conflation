@@ -2,69 +2,50 @@ module.exports.conflate = function (list, perspective) {
   var pairs = {}
     , add = []
     , remove = []
-    , perspective
+    , index = {}
 
-  switch (perspective) {
-    case 'object': perspective = [0]; break;
-    case 'subject': default: perspective = [2]; break;
+  if (typeof perspective === 'undefined') {
+    perspective = 'subject';
   }
+  var wildcardIdx = perspective === 'object' ? 0 : 2
 
-  list.forEach(function (item, idx) {
+  function addItem (item, idx) {
     item._idx = idx;
-
-    perspective.forEach(function (perspective) {
-      var key = [];
-      for (var partIdx = 0; partIdx < 3; partIdx++) {
-        if (partIdx === perspective) key.push(null);
-        else key.push(item[partIdx]);
-      }
-      key = key.join('\0');
-      pairs[key] || (pairs[key] = []);
-      pairs[key].push(item);
-    });
-  });
-
-  function uniquePush (arr, item) {
-    // item is already in the array
-    if (~arr.indexOf(item)) return;
-
-    if (Array.isArray(item)) {
-      // primitive item appears aggregated in the array
-      if (item.every(function (part) {
-        return !Array.isArray(part);
-      }) && arr.some(function (item2) {
-        return item2.every(function (part, idx) {
-          if (Array.isArray(part)) {
-            return ~part.indexOf(item[idx]);
-          }
-          return part === item[idx];
-        });
-      })) return;
+    var key = [ null, item[1], null ];
+    (perspective === 'object') ? (key[2] = item[2]) : (key[0] = item[0]);
+    // ignore aggregated items of different perspective
+    if (Array.isArray(key[ (perspective === 'object') ? 2 : 0 ])) return;
+    key = key.join('\0');
+    if (index[key]) {
+      remove.push(idx);
+      index[key]._active = true;
     }
-
-    arr.push(item);
-    return arr;
+    else {
+      index[key] = [];
+      index[key]._origIdx = idx;
+    }
+    if (Array.isArray(item[wildcardIdx])) {
+      index[key] = index[key].concat(item[wildcardIdx]);
+    }
+    else {
+      if (!~index[key].indexOf(item[wildcardIdx])) {
+        index[key].push(item[wildcardIdx]);
+      }
+      else if (index[key].length === 1) {
+        index[key]._active = false;
+      }
+    }
   }
 
-  Object.keys(pairs).forEach(function (key) {
-    if (pairs[key].length === 1) {
-      return;
-    }
+  list.forEach(addItem);
 
-    var conflated = key.split('\0')
-      , idx = conflated.indexOf('')
-
-    conflated[idx] = [];
-    pairs[key].forEach(function (item) {
-      if (~conflated[idx].indexOf(item[idx])) {
-        return;
-      }
-      uniquePush(conflated[idx], item[idx]);
-      uniquePush(remove, item._idx);
-    });
-
-    if (conflated[idx].length > 1) {
-      uniquePush(add, conflated);
+  Object.keys(index).forEach(function (key) {
+    if (index[key]._active) {
+      var item = key.split('\0');
+      delete index[key]._active;
+      item[wildcardIdx] = index[key];
+      add.push(item);
+      remove.push(index[key]._origIdx);
     }
   });
 
