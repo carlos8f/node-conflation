@@ -18,11 +18,13 @@ module.exports.conflate = function (list, perspective) {
     key = key.join('\0');
     if (index[key]) {
       remove.push(idx);
+      index[key]._replaces.push(idx);
       index[key]._active = true;
     }
     else {
       index[key] = [];
       index[key]._origIdx = idx;
+      index[key]._replaces = [];
     }
     if (Array.isArray(item[wildcardIdx])) {
       var allIncluded = true;
@@ -50,8 +52,8 @@ module.exports.conflate = function (list, perspective) {
   Object.keys(index).forEach(function (key) {
     if (index[key]._active) {
       var item = key.split('\0');
-      delete index[key]._active;
-      item[wildcardIdx] = index[key];
+      item[wildcardIdx] = index[key].slice();
+      item._replaces = [index[key]._origIdx].concat(index[key]._replaces);
       add.push(item);
       remove.push(index[key]._origIdx);
     }

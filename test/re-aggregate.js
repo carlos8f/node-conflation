@@ -23,6 +23,7 @@ describe('re-aggregate', function () {
       ]
     ]);
     assert.deepEqual(result.remove, [ 1, 2, 5 ]);
+    assert.deepEqual(result.add[0]._replaces, [ 1, 5 ]);
 
     var removedCount = 0;
     result.remove.forEach(function (idx) {
@@ -84,5 +85,7 @@ describe('re-aggregate', function () {
       ]
     ]);
     assertPrettyMuchEqual(result.remove, [ 1, 2, 3, 4 ]);
+    assert.deepEqual(result.add[0]._replaces, [ 1, 3 ]);
+    assert.deepEqual(result.add[1]._replaces, [ 2, 4 ]);
   });
 });

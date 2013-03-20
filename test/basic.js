@@ -23,6 +23,7 @@ describe('basic test', function () {
       ]
     ]);
     assertPrettyMuchEqual(result.remove, [ 1, 2, 5 ]);
+    assert.deepEqual(result.add[0]._replaces, [ 1, 5 ]);
   });
 
   it('object perspective', function () {
@@ -38,5 +39,6 @@ describe('basic test', function () {
       ]
     ]);
     assertPrettyMuchEqual(result.remove, [ 2, 3, 5 ]);
+    assert.deepEqual(result.add[0]._replaces, [ 3, 5 ]);
   });
 });

@@ -17,12 +17,16 @@ Call `conflation.conflate(triples [, perspective ])`.
   mode, the object part of the triples will be aggregated. In object mode, the
   subject part of the triples will be aggregated.
 
-Returns: object containing `add` and `remove` keys. `add` will be an array of
-new triples aggregated from the input, with either the subject or object portion
-being an array (depending on the perspective). `remove` will be an array of
-numeric indexes of the input array, of items which are redundant in light of the
-new aggregated triples. Duplicate items in the input will also appear in the 
-`remove` array.
+### Returns
+
+- object containing `add` and `remove` keys.
+- `add` will be an array of new triples aggregated from the input, with either
+the subject or object portion being an array (depending on the perspective).
+- `remove` will be an array of numeric indexes of the input array, of items
+which are redundant in light of the new aggregated triples. Duplicate items in
+the input will also appear in the `remove` array.
+- each element in `add` will have a hidden property called `_replaces` (array),
+corresponding to the set of indexes in the input that the new triple supercedes.
 
 ## Example
 
