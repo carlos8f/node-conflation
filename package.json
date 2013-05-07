@@ -12,9 +12,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/carlos8f/conflation.git"
+    "url": "git://github.com/carlos8f/node-conflation.git"
   },
-  "homepage": "https://github.com/carlos8f/conflation",
+  "homepage": "https://github.com/carlos8f/node-conflation",
   "keywords": [
     "conflate",
     "digest",
